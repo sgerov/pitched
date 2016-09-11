@@ -19,9 +19,9 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{:href => "index.html"} PITCHIUM
+          %a.navbar-brand{:href => "/"} PITCHIUM
         .steps-container
-          %ul.progressbar
+          %ul.stepsbar
             %li.first 60s pitch
             %li.second Send it
             %li.third Wait 24h
@@ -64,3 +64,13 @@
               Finland
               %br/
 
+  .modal#validation.fade.bs-example-modal-sm{"aria-labelledby" => "validation", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog.modal-sm{:role => "document"}
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} ×
+          %h4#myModalLabel.modal-title ⚠️ Incomplete information
+        .modal-body
+        .modal-footer
+          %button.btn.btn-primary{"data-dismiss" => "modal", :type => "button"} OK

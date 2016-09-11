@@ -12,11 +12,17 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+// NOT LOADED! require turbolinks
 //
 // Video recording for Chrome/Firefox (video.js + recordrtc)
 //= require video.js/dist/video
 //= require recordrtc/RecordRTC
 //= require videojs-record/src/js/videojs.record
+// Bootstrap
+//= require bootstrap/dist/js/bootstrap
+// Video uploading
+//= require jquery-file-upload/js/vendor/jquery.ui.widget
+//= require jquery-file-upload/js/jquery.iframe-transport
+//= require jquery-file-upload/js/jquery.fileupload
 
 //= require_tree .

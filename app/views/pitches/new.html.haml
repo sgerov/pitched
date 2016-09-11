@@ -4,24 +4,53 @@
       .col-lg-8.col-lg-offset-2
         %h3 Send us a short pitch about your idea
         %h1 Build Your Dream.
-        %h5 We've got the experience and network to give you the best feedback
-    .row.bottom-17
-      .col-lg-12
-        %video#pitch.video-js.vjs-default-skin{style: 'margin: 0 auto'}
-        %h5 (record as many times as you need until you like your pitch)
-    .row.bottom-17
-      .col-lg-6.col-lg-offset-3
-        .input-group
-          %input.form-control.input-lg{:type => 'text', placeholder: 'Enter E-mail or Skype username'}
-          %span.input-group-btn
-            %button.btn.btn-success.btn-lg{:type => 'button'} Send us the Pitch!
+    .record-container
+      .row.bottom-17
+        .col-lg-12
+          %video#pitch.video-js.vjs-default-skin{style: 'margin: 0 auto'}
+          %h5 (record as many times as you need until you love your pitch)
+      .row.bottom-17
+        .col-lg-6.col-lg-offset-3
+          .input-group.input-fields
+            %input#contact-info.form-control.input-lg{:type => 'text', placeholder: 'Enter E-mail or Skype username'}
+            %span.input-group-btn
+              %input{type: "hidden", name: :fileupload, id: :fileupload}
+              %button#send-pitch.btn.btn-success.btn-lg{type: 'submit'} Send us the Pitch!
+          .progress
+            .progress-bar.progress-bar-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "60", :role => "progressbar", :style => "width: 60%;"}
+              60%
+    .done
+      .panel.panel-success
+        .panel-heading
+          %h4.panel-title Upload complete
+        .panel-body
+          %p
+            🎉 You've successfully uploaded your pitch! 🎉
+          %p
+            You'll be hearing from us in the next 24 hours. Remember that you can check any time your feedback status by providing the same E-mail/Skype you used upon submission.
+          %p
+            %b Thank you for trusting us
+    .not-done
+      .panel.panel-danger
+        .panel-heading
+          %h4.panel-title Upload not completed
+        .panel-body
+          %p
+            Oops! Your pitch didn't reach our servers!
+          %p
+            There was some issue while your pitch was being uploaded, please drop us an e-mail at support@pitchium.com and let us know what exactly happened. If you lost your connectivity, please
+            %a{id: 'retry-upload', href: '#'} click here to upload your file again
+          %p
+            %b Thank you for your patience
+
+
 #service>
   .container>
     .row.centered
       .col-md-4
         %i.fa.fa-trophy
         %h4 Success
-        %p We're serial enterpreneurs with successful exits. We've been all the way down the road and have the insights to make the way smoother for a Startup at all stages.
+        %p We're serial enterpreneurs with successful exits. We've been all the way down the road and have the insights to make the way smoother for a Startup at any stage.
         %p
       .col-md-4
         %i.fa.fa-heart-o

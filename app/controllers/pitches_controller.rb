@@ -1,15 +1,14 @@
 class PitchesController < ApplicationController
   def upload
-    #extract the video data from params
-    video = params[:video]
+    dirname = Rails.root.join('public/pitches/')
+    FileUtils.mkdir_p(dirname) unless File.directory?(dirname)
 
-    # define the save path for the video. I am using public directory for the moment.
-    save_path = Rails.root.join("public/videos/#{video.original_filename}")
-
-    # Open and write the file to file system.
-    File.open(save_path, 'wb') do |f|
-      f.write params[:video].read
-    end
+    # just save in hard disk for prototype
+    params[:files].each do |video|
+      name = video.original_filename
+      path = File.join(dirname, name)
+      File.open(path, "wb") { |f| f.write(video.read) }
+    end if params[:files]
 
     render :nothing => true
   end
