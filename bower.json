@@ -1,0 +1,18 @@
+{
+  "name": "bitcoinkaupat",
+  "version": "0.0.1",
+  "authors": [
+    "Sava Gerov <sava.jg@gmail.com>"
+  ],
+  "description": "Pitching MVP",
+  "license": "MIT",
+  "homepage": "http://sava.gerov.es/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/javascripts",
+    "test",
+    "tests"
+  ]
+}
