@@ -14,5 +14,9 @@
     "vendor/assets/javascripts",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "videojs-record": "~1.4.0",
+    "bootstrap": "~3.1.1"
+  }
 }
