@@ -3,7 +3,7 @@
 # # You can use CoffeeScript in this file: http://coffeescript.org/
 
 ready = ->
-  # video recording
+  # recording player
   player = videojs('pitch',
     controls: true
     width: 640
@@ -15,11 +15,11 @@ ready = ->
       debug: true)
   player.on 'deviceError', ->
     player.recorder.stopDevice()
-    handle_validation('Duh! The following error occured during recording: <br/>' + player.deviceErrorCode)
+    # handle_validation('Duh! The following error occured during recording: <br/>' + player.deviceErrorCode)
     return
   player.on 'error', (error) ->
     player.recorder.stopDevice()
-    handle_validation('Duh! The following error occured during recording: <br/>' + error)
+    # handle_validation('Duh! The following error occured during recording: <br/>' + error)
     return
   # user clicked the record button and started recording
   player.on 'startRecord', ->
@@ -74,12 +74,7 @@ ready = ->
       handle_validation("Please write down an E-mail or Skype account so we can get back to you 🤗")
       return false
 
-    console.log('jeje')
-    console.log(player.recordedData)
-    video = [player.recordedData.video || player.recordedData]
-    console.log('jeje2')
-    console.log(video)
-    $('#fileupload').fileupload('add', {files: [video]});
+    $('#fileupload').fileupload('add', {files: [player.recordedData.video]});
     e.target.disabled = true
     return
 
