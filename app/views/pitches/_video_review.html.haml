@@ -1,0 +1,22 @@
+.col-md-4
+  .panel
+    .panel-heading
+      = review.contact_info['@'] ? 'E-mail:' : 'Skype:'
+      %b
+        = review.contact_info
+      - if review.location
+        \,
+        %b
+          = review.location || 'undetected'
+    .panel-body
+      %video{:controls => true, width: 260, height: 180}
+        %source{:src => review.video[/pitches\/.*/], :type => 'video/webm'}
+      %br
+      - if review.uploaded?
+        %a.review-status.btn.btn-primary.btn-md{:data => {id: review.id}} REVIEW
+      - elsif review.in_review?
+        %a.review-status.btn.btn-success.btn-md{:data => {id: review.id}} REVIEWED
+      - else
+        %a.review-status.btn.btn-default.btn-md{:data => {id: review.id}, disabled: true}
+          = review.updated_at.to_formatted_s
+

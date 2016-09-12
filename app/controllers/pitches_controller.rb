@@ -1,4 +1,21 @@
 class PitchesController < ApplicationController
+  def index
+    @reviews = Pitch.all.order(created_at: 'desc').limit(9)
+    @reviews = @reviews.where(contact_info: params[:contact]) if params[:contact]
+    @reviews = @reviews.where(status: params[:status]) if params[:status]
+    @reviews = @reviews.where(location: params[:location]) if params[:location]
+  end
+
+  def update
+    # haha, it's a prototype, ok?
+    if pitch = Pitch.find(params[:id])
+      pitch.update(status: pitch.status_before_type_cast + 1) unless pitch.status == 'reviewed'
+      render text: pitch.status_msg and return
+    end
+
+    render nothing: true
+  end
+
   def upload
     dirname = Rails.root.join('public/pitches/')
     FileUtils.mkdir_p(dirname) unless File.directory?(dirname)
@@ -14,22 +31,11 @@ class PitchesController < ApplicationController
       end
     end if params[:files]
 
-    render :nothing => true
+    render nothing: true
   end
 
   def status
-    msg = case Pitch.find_by(contact_info: params[:q].downcase).try(:status)
-    when 'uploaded'
-      "UPLOADED. WILL BE REVIEWED SOON"
-    when 'in_review'
-      "APPLICATION IS UNDER REVIEW"
-    when 'reviewed'
-      "REVIEWED. WE WILL BE IN TOUCH VERY SOON"
-    else
-      "APPLICATION NOT FOUND. PLEASE RETRY"
-    end
-
-    render text: msg
+    render text: Pitch.find_by(contact_info: params[:q].downcase).try(:status_msg)
   end
 
   # private

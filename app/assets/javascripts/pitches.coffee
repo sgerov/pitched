@@ -4,62 +4,64 @@
 
 ready = ->
   # recording player
-  player = videojs('pitch',
-    controls: true
-    width: 640
-    height: 480
-    plugins: record:
-      audio: true
-      video: true
-      maxLength: 60
-      debug: true)
-  player.on 'deviceError', ->
-    player.recorder.stopDevice()
-    # handle_validation('Duh! The following error occured during recording: <br/>' + player.deviceErrorCode)
-    return
-  player.on 'error', (error) ->
-    player.recorder.stopDevice()
-    # handle_validation('Duh! The following error occured during recording: <br/>' + error)
-    return
-  # user clicked the record button and started recording
-  player.on 'startRecord', ->
-    $('.navbar .container .steps-container li').removeClass('active')
-    $('.navbar .container .steps-container li.first').addClass('active')
-    return
-  # user completed recording and stream is available
-  player.on 'finishRecord', ->
-    $('.navbar .container .steps-container li').addClass('active')
-    $('.navbar .container .steps-container li.third').removeClass('active')
-    return
-
-  # init fileupload
-  $('#fileupload').fileupload
-    url: '/upload/'
-    done: (e, data) ->
+  if $('#pitch').length
+    player = videojs('pitch',
+      controls: true
+      width: 640
+      height: 480
+      plugins: record:
+        audio: true
+        video: true
+        maxLength: 60
+        debug: true)
+    player.on 'deviceError', ->
       player.recorder.stopDevice()
-      $("html, body").animate({ scrollTop: 0 }, "slow");
-
+      # handle_validation('Duh! The following error occured during recording: <br/>' + player.deviceErrorCode)
+      return
+    player.on 'error', (error) ->
+      player.recorder.stopDevice()
+      # handle_validation('Duh! The following error occured during recording: <br/>' + error)
+      return
+    # user clicked the record button and started recording
+    player.on 'startRecord', ->
+      $('.navbar .container .steps-container li').removeClass('active')
+      $('.navbar .container .steps-container li.first').addClass('active')
+      return
+    # user completed recording and stream is available
+    player.on 'finishRecord', ->
       $('.navbar .container .steps-container li').addClass('active')
-      $('.record-container').hide()
-      $('.done').show()
+      $('.navbar .container .steps-container li.third').removeClass('active')
       return
-    progress: (e, data) ->
-      $('.input-fields').hide()
-      progress = parseInt(data.loaded / data.total * 100, 10);
-      $('#send-pitch').text(progress + '% uploaded')
-      $('.progress-bar').css('width', progress + '%;')
-      return
-    error: (jqXHR, textStatus, errorThrown) ->
-      player.recorder.stopDevice()
-      $("html, body").animate({ scrollTop: 0 }, "slow");
 
-      button = $('#send-pitch')
-      button.text('Send us the Pitch!')
-      button.prop('disabled', false)
+  if $('#fileupload').length
+    # init fileupload
+    $('#fileupload').fileupload
+      url: '/upload/'
+      done: (e, data) ->
+        player.recorder.stopDevice()
+        $("html, body").animate({ scrollTop: 0 }, "slow");
 
-      $('.record-container').hide()
-      $('.not-done').show()
-      return
+        $('.navbar .container .steps-container li').addClass('active')
+        $('.record-container').hide()
+        $('.done').show()
+        return
+      progress: (e, data) ->
+        $('.input-fields').hide()
+        progress = parseInt(data.loaded / data.total * 100, 10);
+        $('#send-pitch').text(progress + '% uploaded')
+        $('.progress-bar').css('width', progress + '%;')
+        return
+      error: (jqXHR, textStatus, errorThrown) ->
+        player.recorder.stopDevice()
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+
+        button = $('#send-pitch')
+        button.text('Send us the Pitch!')
+        button.prop('disabled', false)
+
+        $('.record-container').hide()
+        $('.not-done').show()
+        return
 
   handle_validation = (msg) ->
     validation_modal = $('#validation').modal('show')
@@ -88,6 +90,19 @@ ready = ->
     $('.not-done').hide()
     $('.record-container').show()
     $('.input-fields').show()
+
+  $('.review-status').on 'click', (e) ->
+    return if e.target.disabled
+    e.target.disabled = true
+    $.ajax(
+      method: 'PUT'
+      url: '/pitches/' + e.target.dataset.id
+    ).done( (data) ->
+        e.target.disabled = true
+        button = $(e.target)
+        button.toggleClass('btn-primary').toggleClass('btn-success')
+        button.text(data)
+    )
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
