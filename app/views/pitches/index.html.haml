@@ -1,4 +1,11 @@
 #headerwrap
   .container
-    - @reviews.each do |r|
-      = render partial: 'video_review', locals: { review: r }
+    .col-sm-6
+      = select_tag 'search_status', options_for_select(Pitch.statuses.map { |s| [s[0].humanize, s[1]] }), include_blank: 'Filter by Status', class: 'form-control'
+    .col-sm-6.bottom-17
+      = country_select("user", "country", { priority_countries: ["FI", "ES", "BG"], include_blank: 'Filter by country' }, { class: 'form-control' })
+    - if @pitches.any?
+      - @pitches.each do |r|
+        = render partial: 'video_review', locals: { review: r }
+    - else
+      No pitches found matching the current filters

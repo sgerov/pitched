@@ -1,9 +1,8 @@
 class PitchesController < ApplicationController
   def index
-    @reviews = Pitch.all.order(created_at: 'desc').limit(9)
-    @reviews = @reviews.where(contact_info: params[:contact]) if params[:contact]
-    @reviews = @reviews.where(status: params[:status]) if params[:status]
-    @reviews = @reviews.where(location: params[:location]) if params[:location]
+    @pitches = Pitch.all.order(created_at: 'desc').limit(9)
+    @pitches = @pitches.where(status: params[:status]) if params[:status].present?
+    @pitches = @pitches.where("lower(location) LIKE ?", "%#{params[:country].downcase}%") if params[:country].present?
   end
 
   def update
@@ -35,11 +34,6 @@ class PitchesController < ApplicationController
   end
 
   def status
-    render text: Pitch.find_by(contact_info: params[:q].downcase).try(:status_msg)
+    render text: Pitch.find_by(contact_info: params[:q].downcase).try(:status_msg) || "APPLICATION NOT FOUND"
   end
-
-  # private
-
-  # def pitch_params
-  # end
 end

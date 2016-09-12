@@ -68,6 +68,20 @@ ready = ->
     validation_modal.find('.modal-body').html(msg)
     return
 
+  updateQueryStringParameter = (uri, key, value) ->
+    re = new RegExp('([?&])' + key + '=.*?(&|$)', 'i')
+    separator = if uri.indexOf('?') != -1 then '&' else '?'
+    if uri.match(re)
+      uri.replace re, '$1' + key + '=' + value + '$2'
+    else
+      uri + separator + key + '=' + value
+
+  urlParam = (name) ->
+    results = new RegExp('[?&]' + name + '=([^&#]*)').exec(window.location.href)
+    return unless results
+
+    results[1]
+
   $('#send-pitch').on 'click', (e) ->
     unless player.recordedData
       handle_validation("We couldn't find a valid pitch recording! If you have recorded it and still can't send it to us, please drop us an e-mail at: <b>support@pitchium.com</b>")
@@ -103,6 +117,24 @@ ready = ->
         button.toggleClass('btn-primary').toggleClass('btn-success')
         button.text(data)
     )
+
+  # haha, why just doing a get form when it can be complicated?
+  $('#search_status').change ->
+    status   = $('#search_status option:selected').val()
+    location = updateQueryStringParameter(window.location.href, 'status', status)
+    document.location = location
+  param = decodeURIComponent( urlParam('status') )
+  $("#search_status").val(param) if param != 'undefined'
+
+  # Repeat Yourself Stupid
+  $('#user_country').change ->
+    country = $('#user_country option:selected').val()
+    location = updateQueryStringParameter(window.location.href, 'country', country)
+    document.location = location
+  param = decodeURIComponent( urlParam('country') )
+  $("#user_country").val(param) if param != 'undefined'
+
+
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

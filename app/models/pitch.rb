@@ -10,7 +10,7 @@ class Pitch < ApplicationRecord
     when 'reviewed'
       "APPLICATION REVIEWED 👍"
     else
-      "APPLICATION NOT FOUND. PLEASE RETRY"
+      "YOUR IDEA IS FUNDED"
     end
   end
 end
