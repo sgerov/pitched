@@ -16,4 +16,24 @@ class PitchesController < ApplicationController
 
     render :nothing => true
   end
+
+  def status
+    msg = case Pitch.find_by(contact_info: params[:q].downcase).try(:status)
+    when 'uploaded'
+      "UPLOADED. WILL BE REVIEWED SOON"
+    when 'in_review'
+      "APPLICATION IS UNDER REVIEW"
+    when 'reviewed'
+      "REVIEWED. WE WILL BE IN TOUCH VERY SOON"
+    else
+      "APPLICATION NOT FOUND. PLEASE RETRY"
+    end
+
+    render text: msg
+  end
+
+  # private
+
+  # def pitch_params
+  # end
 end

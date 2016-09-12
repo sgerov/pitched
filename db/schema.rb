@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20160912142418) do
   create_table "pitches", force: :cascade do |t|
     t.string   "video"
     t.string   "contact_info"
-    t.integer  "status"
+    t.integer  "status",   default: 0, null: false
     t.string   "ip"
     t.string   "location"
     t.datetime "created_at",   null: false

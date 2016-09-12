@@ -74,9 +74,15 @@ ready = ->
       handle_validation("Please write down an E-mail or Skype account so we can get back to you 🤗")
       return false
 
-    $('#fileupload').fileupload('add', {files: [player.recordedData.video]});
+    $('#fileupload').fileupload 'add',
+      files: [player.recordedData.video]
+      formData: { contact: $('#contact-info').val() }
     e.target.disabled = true
     return
+
+  $('#send-review').on 'click', (e) ->
+    $.get '/status/', { q: $('#review-info').val() }, (data) ->
+      $('#review-status').text(data)
 
   $('#retry-upload').on 'click', (e) ->
     $('.not-done').hide()
