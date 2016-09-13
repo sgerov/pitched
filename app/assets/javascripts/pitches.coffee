@@ -133,10 +133,12 @@ ready = ->
 
   # Repeat Yourself Stupid
   $('#user_country').change ->
-    country = $('#user_country option:selected').val()
+    code = $('#user_country option:selected').val()
+    country = $('#user_country option:selected').text()
     location = updateQueryStringParameter(window.location.href, 'country', country)
+    location = updateQueryStringParameter(location, 'code', code)
     document.location = location
-  param = decodeURIComponent( urlParam('country') )
+  param = decodeURIComponent( urlParam('code') )
   $("#user_country").val(param) if param != 'undefined'
 
 

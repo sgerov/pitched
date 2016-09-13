@@ -2,7 +2,7 @@ class PitchesController < ApplicationController
   def index
     @pitches = Pitch.all.order(created_at: 'desc').limit(9)
     @pitches = @pitches.where(status: params[:status]) if params[:status].present?
-    @pitches = @pitches.where("lower(location) LIKE ?", "%#{params[:country].downcase}%") if params[:country].present?
+    @pitches = @pitches.where("lower(location) LIKE ?", "%#{params[:country].downcase}%") if params[:country].present? && params[:country] != "Filter by country"
   end
 
   def update
