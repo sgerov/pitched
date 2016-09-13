@@ -47,6 +47,7 @@ ready = ->
         return
       progress: (e, data) ->
         $('.input-fields').hide()
+        $('.progress').show()
         progress = parseInt(data.loaded / data.total * 100, 10);
         $('#send-pitch').text(progress + '% uploaded')
         $('.progress-bar').css('width', progress + '%;')
@@ -90,8 +91,11 @@ ready = ->
       handle_validation("Please write down an E-mail or Skype account so we can get back to you 🤗")
       return false
 
+    # firefox/chrome differences
+    video = if (player.recordedData instanceof Blob) then player.recordedData else player.recordedData.video
+
     $('#fileupload').fileupload 'add',
-      files: [player.recordedData.video]
+      files: [video]
       formData: { contact: $('#contact-info').val() }
     e.target.disabled = true
     return
@@ -104,6 +108,7 @@ ready = ->
     $('.not-done').hide()
     $('.record-container').show()
     $('.input-fields').show()
+    $('.progress').hide()
 
   $('.review-status').on 'click', (e) ->
     return if e.target.disabled

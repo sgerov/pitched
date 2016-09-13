@@ -10,7 +10,7 @@
           = review.location || 'undetected'
     .panel-body
       %video{:controls => true, width: 260, height: 180}
-        %source{:src => review.video[/pitches\/.*/], :type => 'video/webm'}
+        %source{:src => '/pitches/' + review.video.split('/').last, :type => 'video/webm'}
       %br
       - if review.uploaded?
         %a.review-status.btn.btn-primary.btn-md{:data => {id: review.id}} REVIEW

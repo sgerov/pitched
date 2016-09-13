@@ -16,7 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "videojs-record": "~1.4.0",
+    "videojs-record": "https://github.com/savayg/videojs-record.git",
     "bootstrap": "~3.1.1",
     "jquery-file-upload": "~9.12.5"
   }
