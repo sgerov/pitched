@@ -49,8 +49,8 @@ ready = ->
         $('.input-fields').hide()
         $('.progress').show()
         progress = parseInt(data.loaded / data.total * 100, 10);
-        $('#send-pitch').text(progress + '% uploaded')
-        $('.progress-bar').css('width', progress + '%;')
+        $('.progress-bar').css('width', progress + '%')
+        $('.progress-bar').text(progress + '%')
         return
       error: (jqXHR, textStatus, errorThrown) ->
         player.recorder.stopDevice()
