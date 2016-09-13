@@ -14,7 +14,7 @@ set :ssh_options, forward_agent: true
 # Default value for :linked_files is []
 set :linked_files, %w(config/database.yml config/unicorn.rb .env)
 
-set :linked_dirs, %w(public/uploads)
+set :linked_dirs, %w(public/uploads public/pitches)
 
 SSHKit.config.command_map[:rake]  = 'bundle exec rake' # 8
 SSHKit.config.command_map[:rails] = 'bundle exec rails'
