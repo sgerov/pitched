@@ -5,9 +5,10 @@
       %b
         = review.contact_info
       - if review.location
-        \,
+        (
         %b
           = review.location || 'undetected'
+        )
     .panel-body
       %video{:controls => true, width: 260, height: 180}
         %source{:src => '/pitches/' + review.video.split('/').last, :type => 'video/webm'}
