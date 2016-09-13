@@ -13,7 +13,7 @@ ready = ->
         audio: true
         video: true
         maxLength: 60
-        debug: true)
+        debug: false)
     player.on 'deviceError', ->
       player.recorder.stopDevice()
       # handle_validation('Duh! The following error occured during recording: <br/>' + player.deviceErrorCode)
