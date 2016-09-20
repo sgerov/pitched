@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  match "*path" => redirect("https://pitchium.gerov.es/%{path}"), :constraints => { :subdomain => "pitchium", :protocol => "http://" }
+  get "*path" => redirect("https://pitchium.gerov.es/%{path}"), :constraints => { :subdomain => "pitchium", :protocol => "http://" }
 
   root 'pitches#new'
 
