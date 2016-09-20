@@ -1,7 +1,7 @@
 .col-md-4
   .panel
     .panel-heading
-      = review.contact_info['@'] ? 'E-mail:' : 'Skype:'
+      -# review.contact_info['@'] ? 'E-mail:' : 'Skype:'
       %b
         = review.contact_info
       - if review.location
